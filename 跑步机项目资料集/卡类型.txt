@@ -1,0 +1,12 @@
+//参数说明: req_code[IN]:寻卡方式
+//                0x52 = 寻感应区内所有符合14443A标准的卡
+//                0x26 = 寻未进入休眠状态的卡
+//          pTagType[OUT]：卡片类型代码
+//                0x4400 = Mifare_UltraLight
+//                0x0400 = Mifare_One(S50)
+//                0x0200 = Mifare_One(S70)
+//                0x0800 = Mifare_Pro(X)
+//                0x4403 = Mifare_DESFire
+
+
+04 0F 02 20 00 44 00 04 7C DA 8A 8F 49 80 FC

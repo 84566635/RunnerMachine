@@ -1,0 +1,6 @@
+"fun.obj",
+"main.obj",
+"timer.obj",
+"uart.obj" 
+TO "RFIDTest" 
+RAMSIZE(256) 

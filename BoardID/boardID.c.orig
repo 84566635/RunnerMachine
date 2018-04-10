@@ -1,0 +1,64 @@
+#include "main.h"
+#include "uart.h"
+
+uchar xdata Card_Info[7] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+char idata Machine_ID[7] _at_ 0xf1;
+
+//**********************************************************************
+void main()
+{
+    uchar i = 0;
+    uchar temp = 0;
+
+    Init_Uart();
+
+			for (i = 0; i < 7; i++)
+        {
+			Card_Info[i] = Machine_ID[i];
+        }
+    while (1)
+
+    {
+        SendString(1,"\r\n");
+		SendArrayHex(1,Card_Info,7);
+		SendString(1,"\r\n");
+		for (i = 0; i < 7; i++)
+        {
+			Card_Info[i] = Machine_ID[i];
+        }
+		SendArrayHex(1,Card_Info,7);
+		SendString(1,"\r\n");
+		SendArrayHex(1,Machine_ID,7);
+		delay1(1500);
+    }
+}
+
+/**清除数组中指定区域，
+ * Array：待清除的数组
+ * Ch：清除区域准备填充的数据
+ * Head：待清除的起始地址
+ * Length：待清除的数据长度
+ */
+void ArrayReset(unsigned char *Array, unsigned char Ch, char Head, char Length)
+{
+    char i = 0;
+    for (i = Head; i <= Length; i++)
+    {
+        Array[i] = Ch;
+    }
+}
+/**延时 n ms
+ * n：n ms
+ */ 
+void delay1(uint n)
+{
+    uchar i, j;
+    while (n--) {
+        i = 15;
+        j = 90;
+        do
+        {
+            while (--j);
+        } while (--i);
+    }
+}

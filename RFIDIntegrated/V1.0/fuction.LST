@@ -1,0 +1,23 @@
+C51 COMPILER V9.52.0.0   FUCTION                                                           01/05/2018 17:00:18 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE FUCTION
+OBJECT MODULE PLACED IN fuction.OBJ
+COMPILER INVOKED BY: D:\Program Files\Keil\C51\BIN\C51.EXE fuction.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          uchar code table[] = { 0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f, 0x77, 0x7c, 0x39, 0x5e,
+             - 0x79, 0x71};void delay(uint xms)                              {    uint i, j;    for(i = xms; i > 0; i--)             //i=xms即延时约xms毫秒                 for(j=110;j
+             ->0;j--); }  void display(uint value)  //显示子函数 {  uchar wan,qian,bai,shi,ge;   //定义万千百十个位         wan=value/10000; 
+             -                      qian=value%10000/1000;  bai=value%1000/100;                     shi=value%100/10;       ge=value%10;            dula=1;         P0=table[wan]
+             -;             dula=0;         P0=0xff;                wela=1;                         P0=0xfe;                        wela=0;         delay(2);                       dula=1;         P0=table[qian];         dula=0;         P0=0xff; 
+             -        wela=1;       P0=0xfd;        wela=0;         delay(2);               dula=1;         P0=table[bai];  dula=0;         P0=0xff;        wela=1;         P0=0xfb;        wela=0;         delay(
+             -2);                  dula=1;         P0=table[shi];  dula=0;         P0=0xff;        wela=1;         P0=0xf7;        wela=0;         delay(2);                       dula=1;         P0=table[ge];   dul
+             -a=0;         P0=0xff;         wela=1;         P0=0xef;        wela=0;         delay(2);        }  void init()         //初始化函数 {  TMOD=0x20;      //设置定时
+             -器1工作方式         TH1=0xfd;       TL1=0xfd;       TR1=1;  SM0=0;  SM1=1;  REN=1;  EA=1;   ES=1; }  void main() {     init();      while(1)        
+             -{             display(num);   }                }  void ser() interrupt 4     //串口中断函数 {         if(RI){            num=SBUF;                  RI=0; 
+             -           }              //置RI为0以便接收下一个数据            SBUF=num;       while(!TI);     TI=0; }
+*** ERROR C129 IN LINE 1 OF fuction.c: missing ';' before 'code'
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

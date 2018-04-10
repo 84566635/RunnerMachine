@@ -1,0 +1,192 @@
+Added Component: Designator=BEEP2(BEEP)
+Added Component: Designator=C1(CAP)
+Added Component: Designator=C2(capc)
+Added Component: Designator=C3(CAP)
+Added Component: Designator=C4(CAP)
+Added Component: Designator=C5(CAP)
+Added Component: Designator=C6(CAP)
+Added Component: Designator=D1(D4148_1206)
+Added Component: Designator=D2(D4148_1206)
+Added Component: Designator=LED1(LED_3mm)
+Added Component: Designator=LED2(LED_3mm)
+Added Component: Designator=LED3(LED_3mm)
+Added Component: Designator=LED4(LED_3mm)
+Added Component: Designator=mUSB1(mUSB)
+Added Component: Designator=P1(pin4)
+Added Component: Designator=P2(pin8)
+Added Component: Designator=P5(pin5)
+Added Component: Designator=P7(pin5)
+Added Component: Designator=P8(pin8)
+Added Component: Designator=R1(res)
+Added Component: Designator=R2(res)
+Added Component: Designator=R3(res)
+Added Component: Designator=R4(res)
+Added Component: Designator=R6(res)
+Added Component: Designator=R7(res)
+Added Component: Designator=Relay2(¼ÌµçÆ÷-SRD)
+Added Component: Designator=Rely1(¼ÌµçÆ÷-SRD)
+Added Component: Designator=S1(Horizontal_Switch)
+Added Component: Designator=T1(PNP)
+Added Component: Designator=T2(PNP)
+Added Component: Designator=Te1(Terminal_6P)
+Added Component: Designator=U2(STC8A8K64S4A12_LQFP64S)
+Added Component: Designator=U3(RT9193-33)
+Added Pin To Net: NetName=VCC Pin=BEEP2-1
+Added Pin To Net: NetName=STATUS Pin=BEEP2-2
+Added Pin To Net: NetName=GND Pin=C1-1
+Added Pin To Net: NetName=VCC Pin=C1-2
+Added Pin To Net: NetName=VCC Pin=C2-1
+Added Pin To Net: NetName=GND Pin=C2-2
+Added Pin To Net: NetName=VCC33 Pin=C3-1
+Added Pin To Net: NetName=GND Pin=C3-2
+Added Pin To Net: NetName=VCC33 Pin=C4-1
+Added Pin To Net: NetName=GND Pin=C4-2
+Added Pin To Net: NetName=VCC Pin=C5-1
+Added Pin To Net: NetName=GND Pin=C5-2
+Added Pin To Net: NetName=NetC6_1 Pin=C6-1
+Added Pin To Net: NetName=GND Pin=C6-2
+Added Pin To Net: NetName=GND Pin=D1-1
+Added Pin To Net: NetName=NetD1_2 Pin=D1-2
+Added Pin To Net: NetName=GND Pin=D2-1
+Added Pin To Net: NetName=NetD2_2 Pin=D2-2
+Added Pin To Net: NetName=NetLED1_1 Pin=LED1-1
+Added Pin To Net: NetName=GND Pin=LED1-2
+Added Pin To Net: NetName=NetLED2_1 Pin=LED2-1
+Added Pin To Net: NetName=STATUS Pin=LED2-2
+Added Pin To Net: NetName=NetLED3_1 Pin=LED3-1
+Added Pin To Net: NetName=GND Pin=LED3-2
+Added Pin To Net: NetName=NetLED4_1 Pin=LED4-1
+Added Pin To Net: NetName=GND Pin=LED4-2
+Added Pin To Net: NetName=GND Pin=mUSB1-GND
+Added Pin To Net: NetName=NetmUSB1_VCC Pin=mUSB1-VCC
+Added Pin To Net: NetName=VCC Pin=P1-1
+Added Pin To Net: NetName=RXD Pin=P1-2
+Added Pin To Net: NetName=TXD Pin=P1-3
+Added Pin To Net: NetName=GND Pin=P1-4
+Added Pin To Net: NetName=VCC33 Pin=P2-1
+Added Pin To Net: NetName=RST Pin=P2-2
+Added Pin To Net: NetName=GND Pin=P2-3
+Added Pin To Net: NetName=P36 Pin=P2-4
+Added Pin To Net: NetName=MISO Pin=P2-5
+Added Pin To Net: NetName=MOSI Pin=P2-6
+Added Pin To Net: NetName=SCK Pin=P2-7
+Added Pin To Net: NetName=SDA Pin=P2-8
+Added Pin To Net: NetName=SET1 Pin=P5-1
+Added Pin To Net: NetName=VCC Pin=P5-2
+Added Pin To Net: NetName=GND Pin=P5-3
+Added Pin To Net: NetName=RXD2 Pin=P5-4
+Added Pin To Net: NetName=TXD2 Pin=P5-5
+Added Pin To Net: NetName=SET2 Pin=P7-1
+Added Pin To Net: NetName=VCC Pin=P7-2
+Added Pin To Net: NetName=GND Pin=P7-3
+Added Pin To Net: NetName=RXD3 Pin=P7-4
+Added Pin To Net: NetName=TXD3 Pin=P7-5
+Added Pin To Net: NetName=P74 Pin=P8-1
+Added Pin To Net: NetName=P75 Pin=P8-2
+Added Pin To Net: NetName=P77 Pin=P8-3
+Added Pin To Net: NetName=P76 Pin=P8-4
+Added Pin To Net: NetName=P03 Pin=P8-5
+Added Pin To Net: NetName=P02 Pin=P8-6
+Added Pin To Net: NetName=P37 Pin=P8-7
+Added Pin To Net: NetName=P36 Pin=P8-8
+Added Pin To Net: NetName=VCC Pin=R1-1
+Added Pin To Net: NetName=NetLED1_1 Pin=R1-2
+Added Pin To Net: NetName=VCC Pin=R2-1
+Added Pin To Net: NetName=NetLED2_1 Pin=R2-2
+Added Pin To Net: NetName=NetLED3_1 Pin=R3-1
+Added Pin To Net: NetName=NetD1_2 Pin=R3-2
+Added Pin To Net: NetName=NetR4_1 Pin=R4-1
+Added Pin To Net: NetName=START Pin=R4-2
+Added Pin To Net: NetName=NetLED4_1 Pin=R6-1
+Added Pin To Net: NetName=NetD2_2 Pin=R6-2
+Added Pin To Net: NetName=NetR7_1 Pin=R7-1
+Added Pin To Net: NetName=STOP Pin=R7-2
+Added Pin To Net: NetName=NetD2_2 Pin=Relay2-1
+Added Pin To Net: NetName=GND Pin=Relay2-2
+Added Pin To Net: NetName=NetRelay2_3 Pin=Relay2-3
+Added Pin To Net: NetName=NetRelay2_5 Pin=Relay2-5
+Added Pin To Net: NetName=NetD1_2 Pin=Rely1-1
+Added Pin To Net: NetName=GND Pin=Rely1-2
+Added Pin To Net: NetName=NetRely1_3 Pin=Rely1-3
+Added Pin To Net: NetName=NetRely1_5 Pin=Rely1-5
+Added Pin To Net: NetName=NetmUSB1_VCC Pin=S1-1
+Added Pin To Net: NetName=VCC Pin=S1-2
+Added Pin To Net: NetName=VCC Pin=T1-1
+Added Pin To Net: NetName=NetR4_1 Pin=T1-2
+Added Pin To Net: NetName=NetD1_2 Pin=T1-3
+Added Pin To Net: NetName=VCC Pin=T2-1
+Added Pin To Net: NetName=NetR7_1 Pin=T2-2
+Added Pin To Net: NetName=NetD2_2 Pin=T2-3
+Added Pin To Net: NetName=NetRely1_3 Pin=Te1-1
+Added Pin To Net: NetName=NetRely1_5 Pin=Te1-2
+Added Pin To Net: NetName=NetRelay2_3 Pin=Te1-3
+Added Pin To Net: NetName=NetRelay2_5 Pin=Te1-4
+Added Pin To Net: NetName=KEY_START Pin=Te1-5
+Added Pin To Net: NetName=KEY_STOP Pin=Te1-6
+Added Pin To Net: NetName=TXD2 Pin=U2-3
+Added Pin To Net: NetName=SDA Pin=U2-4
+Added Pin To Net: NetName=MOSI Pin=U2-5
+Added Pin To Net: NetName=RST Pin=U2-6
+Added Pin To Net: NetName=START Pin=U2-7
+Added Pin To Net: NetName=STOP Pin=U2-8
+Added Pin To Net: NetName=MISO Pin=U2-10
+Added Pin To Net: NetName=SCK Pin=U2-12
+Added Pin To Net: NetName=VCC Pin=U2-19
+Added Pin To Net: NetName=STATUS Pin=U2-20
+Added Pin To Net: NetName=GND Pin=U2-21
+Added Pin To Net: NetName=RXD Pin=U2-27
+Added Pin To Net: NetName=TXD Pin=U2-28
+Added Pin To Net: NetName=KEY_START Pin=U2-29
+Added Pin To Net: NetName=KEY_STOP Pin=U2-30
+Added Pin To Net: NetName=P36 Pin=U2-35
+Added Pin To Net: NetName=P37 Pin=U2-36
+Added Pin To Net: NetName=SET2 Pin=U2-50
+Added Pin To Net: NetName=RXD3 Pin=U2-51
+Added Pin To Net: NetName=TXD3 Pin=U2-52
+Added Pin To Net: NetName=P02 Pin=U2-53
+Added Pin To Net: NetName=P74 Pin=U2-54
+Added Pin To Net: NetName=P75 Pin=U2-55
+Added Pin To Net: NetName=P76 Pin=U2-56
+Added Pin To Net: NetName=P77 Pin=U2-57
+Added Pin To Net: NetName=P03 Pin=U2-59
+Added Pin To Net: NetName=SET1 Pin=U2-63
+Added Pin To Net: NetName=RXD2 Pin=U2-64
+Added Pin To Net: NetName=VCC Pin=U3-1
+Added Pin To Net: NetName=GND Pin=U3-2
+Added Pin To Net: NetName=VCC Pin=U3-3
+Added Pin To Net: NetName=NetC6_1 Pin=U3-4
+Added Pin To Net: NetName=VCC33 Pin=U3-5
+Added Member To Class: ClassName=start Member=Component BEEP2 BEEP
+Added Member To Class: ClassName=start Member=Component C1 104
+Added Member To Class: ClassName=start Member=Component C2 10uF
+Added Member To Class: ClassName=start Member=Component C3 105
+Added Member To Class: ClassName=start Member=Component C4 104
+Added Member To Class: ClassName=start Member=Component C5 105
+Added Member To Class: ClassName=start Member=Component C6 223
+Added Member To Class: ClassName=start Member=Component D1 D4148
+Added Member To Class: ClassName=start Member=Component D2 D4148
+Added Member To Class: ClassName=start Member=Component LED1 LED_3mm
+Added Member To Class: ClassName=start Member=Component LED2 LED_3mm
+Added Member To Class: ClassName=start Member=Component LED3 LED_3mm
+Added Member To Class: ClassName=start Member=Component LED4 LED_3mm
+Added Member To Class: ClassName=start Member=Component mUSB1 mUSB
+Added Member To Class: ClassName=start Member=Component P1 pin4
+Added Member To Class: ClassName=start Member=Component P2 pin8
+Added Member To Class: ClassName=start Member=Component P5 pin5
+Added Member To Class: ClassName=start Member=Component P7 pin5
+Added Member To Class: ClassName=start Member=Component P8 pin8
+Added Member To Class: ClassName=start Member=Component R1 200
+Added Member To Class: ClassName=start Member=Component R2 1k
+Added Member To Class: ClassName=start Member=Component R3 4.7k
+Added Member To Class: ClassName=start Member=Component R4 100
+Added Member To Class: ClassName=start Member=Component R6 4.7k
+Added Member To Class: ClassName=start Member=Component R7 100
+Added Member To Class: ClassName=start Member=Component Relay2 ¼ÌµçÆ÷-Stop
+Added Member To Class: ClassName=start Member=Component Rely1 ¼ÌµçÆ÷-Start
+Added Member To Class: ClassName=start Member=Component S1 Horizontal_Switch
+Added Member To Class: ClassName=start Member=Component T1 8550
+Added Member To Class: ClassName=start Member=Component T2 8550
+Added Member To Class: ClassName=start Member=Component Te1 Terminal_6P
+Added Member To Class: ClassName=start Member=Component U2 STC8A8K64S4A12_LQFP64
+Added Member To Class: ClassName=start Member=Component U3 RT9193-33
+Added Room: Name=start

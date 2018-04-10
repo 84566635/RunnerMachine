@@ -1,0 +1,6 @@
+"E2PROM.obj",
+"main.obj",
+"RC522.obj",
+"uart.obj" 
+TO "RFID_V1" 
+RAMSIZE(256) 

@@ -1,0 +1,31 @@
+Change Component Library : Designator=Te1 Old Library=集成库1.IntLib New Library=集成库.IntLib
+Added Component: Designator=D1(D4148_1206)
+Added Component: Designator=D2(D4148_1206)
+Added Component: Designator=Relay2(继电器-SRD)
+Added Component: Designator=Rely1(继电器-SRD)
+Added Component: Designator=T1(PNP)
+Added Component: Designator=T2(PNP)
+Added Pin To Net: NetName=GND Pin=D1-1
+Added Pin To Net: NetName=NetD1_2 Pin=D1-2
+Added Pin To Net: NetName=GND Pin=D2-1
+Added Pin To Net: NetName=NetD2_2 Pin=D2-2
+Added Pin To Net: NetName=NetD2_2 Pin=Relay2-1
+Added Pin To Net: NetName=GND Pin=Relay2-2
+Added Pin To Net: NetName=NetRelay2_3 Pin=Relay2-3
+Added Pin To Net: NetName=NetRelay2_5 Pin=Relay2-5
+Added Pin To Net: NetName=NetD1_2 Pin=Rely1-1
+Added Pin To Net: NetName=GND Pin=Rely1-2
+Added Pin To Net: NetName=NetRely1_3 Pin=Rely1-3
+Added Pin To Net: NetName=NetRely1_5 Pin=Rely1-5
+Added Pin To Net: NetName=VCC Pin=T1-1
+Added Pin To Net: NetName=NetR4_1 Pin=T1-2
+Added Pin To Net: NetName=NetD1_2 Pin=T1-3
+Added Pin To Net: NetName=VCC Pin=T2-1
+Added Pin To Net: NetName=NetR7_1 Pin=T2-2
+Added Pin To Net: NetName=NetD2_2 Pin=T2-3
+Added Member To Class: ClassName=start Member=Component D1 D4148
+Added Member To Class: ClassName=start Member=Component D2 D4148
+Added Member To Class: ClassName=start Member=Component Relay2 继电器-Stop
+Added Member To Class: ClassName=start Member=Component Rely1 继电器-Start
+Added Member To Class: ClassName=start Member=Component T1 8550
+Added Member To Class: ClassName=start Member=Component T2 8550

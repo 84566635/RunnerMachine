@@ -1,0 +1,27 @@
+Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~PCB_Project1.PrjPCB|ReportField=ProjectFullPath~H:\Learn\Project\RunnerMachine\RFID_PCB\电路板\跑步机start\PCB_Project1.PrjPCB|ReportField=Title~Bill of Materials For PCB Document [StartV2.PcbDoc]|ReportField=TotalQuantity~42|ReportField=ReportTime~10:21:49|ReportField=ReportDate~2018/1/22|ReportField=ReportDateTime~2018/1/22 10:21:49|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=DataSourceFileName~StartV2.PcbDoc|ReportField=DataSourceFullPath~H:\Learn\Project\RunnerMachine\RFID_PCB\电路板\跑步机start\StartV2.PcbDoc
+BEEP||BEEP2|BEEP|BEEP|1
+104||C1, C4, C11|CAP|CAP|3
+10uF||C2|capc|CAPC|1
+105||C3, C5|CAP|CAP|2
+223||C6|CAP|CAP|1
+104||C7, C8, C9, C10|CapE|CapE|4
+RS232||COMP|DB9|RS232|1
+ConTerminal||CT1, CT2, CT3|ConTerminal|ConTerminal|3
+D4148||D1, D2|D4148_1206|D4148_1206|2
+LED_3mm||LED1, LED2, LED3, LED4|LED_3mm|LED_3mm|4
+mUSB||mUSB1|mUSB|mUSB|1
+pin4||P1|pin4|pin4|1
+pin5||P2, P3|pin5|pin5|2
+pin8||P4|pin8|pin8|1
+WiFi||P5|WiFi|WiFi|1
+200||R1|res|RES|1
+1k||R2|res|RES|1
+4.7k||R3, R6|res|RES|2
+100||R4, R7|res|RES|2
+继电器-Stop||Relay2|继电器-SRD|继电器-SRD|1
+继电器-Start||Rely1|继电器-SRD|继电器-SRD|1
+Horizontal_Switch||S1|Horizontal_Switch|Horizontal_Switch|1
+8550||T1, T2|PNP|PNP|2
+STC8A8K64S4A12_LQFP64||U2|STC8A8K64S4A12_LQFP64S|STC8A8K64S4A12_LQFP64|1
+RT9193-33||U3|RT9193-33|RT9193-33|1
+MAX232||U4|MAX232|MAX232|1

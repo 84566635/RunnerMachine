@@ -1,0 +1,136 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              01/12/2018 21:42:29 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files\Keil\C51\BIN\C51.EXE main.c LARGE BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "uart.h"
+   2          #include "main.h"
+   3          #include "E2PROM.h"
+   4          #include "MFRC522.h"
+   5          #include "String.h"
+   6          
+   7          #define IAP_DefaultADDR 0x0000
+   8          
+   9          uchar xdata data1[10] = {0,1,2,3,4,5,6,7,8,9};
+  10          
+  11          uchar xdata msg[15];
+  12          uchar xdata g_ucTempbuf[20];//The Buffer of Card information
+  13          uchar xdata CardType[2];//The Buffer of CardType
+  14          uchar xdata UID[4];//The Buffer of Card_ID_number
+  15          
+  16          //uchar E2PROM_Index = 0;
+  17          WORD IAP_CurrentAddr = IAP_DefaultADDR;
+  18          uchar WriteFlag = 0;
+  19          
+  20          void main()
+  21          {
+  22   1              uchar ReadStatus = 0;
+  23   1              uchar FindStatus = 0;
+  24   1          uchar i = 0;
+  25   1              uchar temp = 0;
+  26   1              
+  27   1              Init_Uart();
+  28   1              SendString("Initing...");
+  29   1              
+  30   1              InitRc522();
+  31   1              
+  32   1              IapEraseSector(IAP_DefaultADDR);//E2PROM擦除，只需第一次擦除就好
+  33   1              delay1(10);
+  34   1      
+  35   1              LED_GREEN = 1;
+  36   1              
+  37   1              while(1)
+  38   1              {
+  39   2                      
+  40   2                      ReadStatus = ReadUID(CardType, UID);
+  41   2                      if(ReadStatus == 1)//ReadCarding is successful
+  42   2                      {
+  43   3                              SendString("card type:");//Printting Card—Type 2 Byte
+  44   3                              SendArrayStr(2, CardType);
+  45   3                  SendString("\r\n");
+  46   3                  SendString("Card_Serial_number:\n");//´òÓ¡¿¨ÐòÁÐ
+  47   3                  SendArrayStr(4, UID);
+  48   3                              SendString("\r\n");
+  49   3                              PcdHalt();
+  50   3                      }               
+  51   2                      
+  52   2                      
+  53   2                      SendString("\r\n");
+  54   2                              
+  55   2              }
+C51 COMPILER V9.52.0.0   MAIN                                                              01/12/2018 21:42:29 PAGE 2   
+
+  56   1      
+  57   1      }
+  58          /*************************读取卡号*************************************
+  59           * CardType:读到的卡类型，2Byte
+  60           * UID：读到的卡ID号，4Byte
+  61           * return :status 0:fail,1:success
+  62           */
+  63          bit ReadUID(uchar *CardType, uchar *UID)
+  64          {
+  65   1          uchar xdata status = 0;
+  66   1          uchar i;
+  67   1          status = PcdRequest(PICC_REQALL, g_ucTempbuf);////Searching Card
+  68   1          if (status != MI_OK)
+  69   1          {
+  70   2              InitRc522();
+  71   2              return 0;
+  72   2          }
+  73   1          for(i = 0; i < 2; i++)
+  74   1          {
+  75   2              (*CardType++) = g_ucTempbuf[i];
+  76   2          }
+  77   1          
+  78   1          status = PcdAnticoll(g_ucTempbuf);//防冲撞
+  79   1          if (status != MI_OK)
+  80   1          {
+  81   2              return 0;
+  82   2          }
+  83   1          for(i = 0; i <= 3; i++)
+  84   1          {
+  85   2              (*UID++) = g_ucTempbuf[3-i];
+  86   2          }
+  87   1          return 1;
+  88   1      }
+  89          /**********************在E2PROM中寻卡**********************************
+  90           * UID:需要寻找的卡ID号，默认在第一页中寻找，512Byte
+  91           * IAP_CurrentAdress：记录寻找到的位置
+  92           * return:status 0:There is no same Card in E2PROM;
+  93           *                               1:There has a same Card in E2PROM。
+  94           */ 
+  95          bit FindUID(uchar *UID,WORD IAP_CurrentAddr)
+  96          {
+  97   1              uchar i = 0;
+  98   1              //E2PROM中ID号遍历，查找相同卡号,共计可以存储128个ID 
+  99   1              for(i = 0;i <= 127;i ++)
+ 100   1              {
+ 101   2                      IapReadFlash(IAP_DefaultADDR + 4 * i,4,msg);
+ 102   2                      if(strcmp(UID,msg) == 0)//如果存在相同卡号
+ 103   2                      {
+ 104   3                              IAP_CurrentAddr = i;
+ 105   3                              return 1;
+ 106   3                      }
+ 107   2              }
+ 108   1              return 0;
+ 109   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    432    ----
+   CONSTANT SIZE    =     46    ----
+   XDATA SIZE       =     54      18
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+C51 COMPILER V9.52.0.0   MAIN                                                              01/12/2018 21:42:29 PAGE 3   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

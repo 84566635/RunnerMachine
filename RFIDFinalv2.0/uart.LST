@@ -1,0 +1,327 @@
+C51 COMPILER V9.52.0.0   UART                                                              03/26/2018 14:07:43 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN uart.OBJ
+COMPILER INVOKED BY: D:\Program Files\Keil\C51\BIN\C51.EXE uart.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "uart.h"
+   2          
+   3          #define GymInfoSize 100 //跑步机信息缓存区的大小
+   4          
+   5          bit busy1, busy2, busy3, busy4; //串口发送标志
+   6          uchar xdata _16_2_str[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F
+             -'};
+   7          
+   8          //15个字节的UID缓存区，其中卡类型：6byte+7byte；卡号为：11byte + 10byte + 9byte + 8byte
+   9          uchar xdata UID_buffer[15] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+             -, 0x00, 0x00};
+  10          
+  11          /**Card_Info[10]卡信息保存
+  12           * aa 55：帧头:[0:1]--2byte
+  13           * 06：[2]--1byte:发送卡信息的命令
+  14           * card type：[3:4]--2byte
+  15           * card UID：[5:8]--4byte
+  16           * ff：[9]--2byte为帧尾
+  17           */
+  18          extern uchar xdata Card_Info[10] = {0xaa, 0x55, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xcc};
+  19          extern uchar UID_Index = 0;
+  20          extern bit UID_Receive_Flag = 0; //完整卡信息读取完成标志
+  21          extern uchar TimeReadUID;
+  22          /**GymInfoBuff[20]跑步机运行状态缓存区
+  23           * 帧头(aa + 55) + 01/02/03/04 + 状态信息
+  24           */
+  25          extern uchar xdata GymInfoBuff[GymInfoSize] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  26          extern uchar MileageInfo[2] = {0x00, 0x00};
+  27          extern uchar TimeGymInfo;
+  28          extern uchar GymInfoIndex = 0; //里程保存指针
+  29          extern bit Mileage_Finsh = 0;
+  30          /************************************************/
+  31          
+  32          /**串口发送字符  
+  33           * dat：待发送的字符
+  34           * Uart_Port：需要使用的串口号
+  35           */
+  36          void SendData(unsigned char Uart_Port, unsigned char dat)
+  37          {
+  38   1          switch (Uart_Port)
+  39   1          {
+  40   2          case 1:
+  41   2              while (busy1)
+  42   2                  ;
+  43   2              busy1 = 1;
+  44   2              SBUF = dat;
+  45   2              break;
+  46   2          case 2:
+  47   2              while (busy2)
+  48   2                  ;
+  49   2              busy2 = 1;
+  50   2              S2BUF = dat;
+  51   2              break;
+  52   2          case 3:
+  53   2              while (busy3)
+C51 COMPILER V9.52.0.0   UART                                                              03/26/2018 14:07:43 PAGE 2   
+
+  54   2                  ;
+  55   2              busy3 = 1;
+  56   2              S3BUF = dat;
+  57   2              break;
+  58   2          case 4:
+  59   2              while (busy4)
+  60   2                  ;
+  61   2              busy4 = 1;
+  62   2              S4BUF = dat;
+  63   2              break;
+  64   2          default:
+  65   2              break;
+  66   2          }
+  67   1      }
+  68          
+  69          /**串口发送字符串
+  70           * Uart_Port：需要使用的串口号
+  71           * s：待发送的字符串
+  72           */
+  73          void SendString(unsigned char Uart_Port, char *s)
+  74          {
+  75   1          while (*s)
+  76   1          {
+  77   2              SendData(Uart_Port, *s++);
+  78   2          }
+  79   1      }
+  80          void SendArrayHex(unsigned char Uart_Port, char *s, uint n)
+  81          {
+  82   1          while (n--)
+  83   1          {
+  84   2              SendData(Uart_Port, *s++);
+  85   2          }
+  86   1      }
+  87          /********************Initialization********************************/
+  88          void Init_Uart()
+  89          {
+  90   1          Init_UART1();
+  91   1          Init_UART2();
+  92   1          Init_UART3();
+  93   1          Init_UART4();
+  94   1      
+  95   1          EA = 1;
+  96   1      }
+  97          void Init_UART1()
+  98          {
+  99   1          SCON = 0x50;
+ 100   1          TL1 = (65536 - (FOSC / 4 / BAUD1));
+ 101   1          TH1 = (65536 - (FOSC / 4 / BAUD1)) >> 8;
+ 102   1          AUXR |= 0X40; //
+ 103   1          AUXR = 0x40;  //定时器1为1T模式
+ 104   1          TMOD = 0x00;  //定时器1为模式0(16位自动重载)
+ 105   1          TR1 = 1;
+ 106   1          ES = 1; //使能串口1中断
+ 107   1      
+ 108   1          busy1 = 0;
+ 109   1      }
+ 110          
+ 111          void Init_UART2()
+ 112          {
+ 113   1          S2CON = 0x50;
+ 114   1          T2L = (65536 - (FOSC / 4 / BAUD2));
+ 115   1          T2H = (65536 - (FOSC / 4 / BAUD2)) >> 8;
+C51 COMPILER V9.52.0.0   UART                                                              03/26/2018 14:07:43 PAGE 3   
+
+ 116   1          AUXR |= 0X14; //T2为1T模式，并启动定时器2
+ 117   1          IE2 |= 0x01;  //使能串口2中断
+ 118   1          busy2 = 0;
+ 119   1      }
+ 120          
+ 121          void Init_UART3()
+ 122          {
+ 123   1          S3CON = 0x50;
+ 124   1          T3L = (65536 - (FOSC / 4 / BAUD3));
+ 125   1          T3H = (65536 - (FOSC / 4 / BAUD3)) >> 8;
+ 126   1          T4T3M |= 0x0a;
+ 127   1          IE2 |= 0x08; //使能串口3中断
+ 128   1          busy3 = 0;
+ 129   1      }
+ 130          
+ 131          void Init_UART4()
+ 132          {
+ 133   1          S4CON = 0x50;
+ 134   1          T4L = (65536 - (FOSC / 4 / BAUD4));
+ 135   1          T4H = (65536 - (FOSC / 4 / BAUD4)) >> 8;
+ 136   1          T4T3M |= 0xa0;
+ 137   1          IE2 |= 0x10; //使能串口4中断
+ 138   1          busy4 = 0;
+ 139   1      }
+ 140          
+ 141          /**************UART_Interrupt_Fuctions****************************/
+ 142          void UART1_Isr() interrupt 4 using 1
+ 143          {
+ 144   1          if (TI)
+ 145   1          {
+ 146   2              TI = 0;    //清中断标志
+ 147   2              busy1 = 0; //清忙标志
+ 148   2          }
+ 149   1          if (RI)
+ 150   1          {
+ 151   2              RI = 0;
+ 152   2          }
+ 153   1      }
+ 154          
+ 155          void UART2_Isr() interrupt 8
+ 156          {
+ 157   1          if (S2CON & 0x02)
+ 158   1          {
+ 159   2              S2CON &= ~0x02; //清中断标志
+ 160   2              busy2 = 0;      //清忙标志
+ 161   2          }
+ 162   1          if (S2CON & 0x01)
+ 163   1          {
+ 164   2              S2CON &= ~0x01; //清中断标志
+ 165   2          }
+ 166   1      }
+ 167          
+ 168          void Uart3Isr() interrupt 17
+ 169          {
+ 170   1          uchar buffer = 0;
+ 171   1          if (S3CON & 0x02)
+ 172   1          {
+ 173   2              S3CON &= ~0x02;
+ 174   2              busy3 = 0;
+ 175   2          }
+ 176   1          if (S3CON & 0x01)
+ 177   1          {
+C51 COMPILER V9.52.0.0   UART                                                              03/26/2018 14:07:43 PAGE 4   
+
+ 178   2              S3CON &= ~0x01;
+ 179   2      
+ 180   2              buffer = S3BUF;
+ 181   2              TimeReadUID = 0;
+ 182   2              Read_Card_UID(UID_buffer, Card_Info, buffer);
+ 183   2          }
+ 184   1      }
+ 185          
+ 186          void UART4_Isr() interrupt 18
+ 187          {
+ 188   1          uchar Buffer = 0;
+ 189   1              uchar i = 0;
+ 190   1          if (S4CON & 0x02)
+ 191   1          {
+ 192   2              S4CON &= ~0x02; //清中断标志
+ 193   2              busy4 = 0;      //清忙标志
+ 194   2          }
+ 195   1          if (S4CON & 0x01)
+ 196   1          {
+ 197   2              S4CON &= ~0x01; //清中断标志
+ 198   2      
+ 199   2              Buffer = S4BUF;
+ 200   2                      
+ 201   2                      //S2BUF = Buffer;//直接透传给WIFI模块（串口2）
+ 202   2              TimeGymInfo = 0;
+ 203   2                      
+ 204   2                      
+ 205   2              GetMileage(GymInfoBuff, MileageInfo, Buffer);//100字节接收完毕之后，跟上卡号
+ 206   2                      
+ 207   2              //S4BUF = Buffer;
+ 208   2      
+ 209   2              
+ 210   2          }
+ 211   1      }
+ 212          /**读取卡信息
+ 213           * UID_buffer：UID_buffer 缓存区
+ 214           * Card_Info：卡信息存储区
+ 215           * Msg：一个字节输入
+ 216           */
+ 217          void Read_Card_UID(uchar *UID_buffer, uchar *Card_Info, uchar Msg)
+ 218          {
+ 219   1          uchar i = 0;
+ 220   1          UID_buffer[UID_Index++] = Msg;
+ 221   1          if (UID_Index == 15)
+ 222   1          {
+ 223   2              UID_Index = 0;
+ 224   2                      //get the card type
+ 225   2              for (i = 0; i < 2; i++)
+ 226   2              {
+ 227   3                  Card_Info[3 + i] = UID_buffer[5 + i];
+ 228   3              }
+ 229   2                      //get the card UID
+ 230   2              for (i = 0; i < 4; i++)
+ 231   2              {
+ 232   3                  Card_Info[5 + i] = UID_buffer[10 - i];
+ 233   3              }
+ 234   2              UID_Receive_Flag = 1;
+ 235   2              memset(UID_buffer, 0x00, 15);
+ 236   2          }
+ 237   1          else if (UID_Index == 12)
+ 238   1          {
+ 239   2              UID_Index = 0;
+C51 COMPILER V9.52.0.0   UART                                                              03/26/2018 14:07:43 PAGE 5   
+
+ 240   2                      //get the card type
+ 241   2              for (i = 0; i < 2; i++)
+ 242   2              {
+ 243   3                  Card_Info[3 + i] = UID_buffer[5 + i];
+ 244   3              }
+ 245   2                      //get the card UID
+ 246   2              for (i = 0; i < 4; i++)
+ 247   2              {
+ 248   3                  Card_Info[5 + i] = UID_buffer[10 - i];
+ 249   3              }
+ 250   2              UID_Receive_Flag = 1;
+ 251   2              memset(UID_buffer, 0x00, 12);
+ 252   2          }
+ 253   1          else
+ 254   1          {
+ 255   2          }
+ 256   1      }
+ 257          /**数据包解析
+ 258           * Input:
+ 259           *      GymInfoBuff[]：接收到的数据缓存
+ 260           *      MileageInfo[]：准备保存的里程
+ 261           *      Data_Length：检测的数据包的最小长度
+ 262           * Return:1：取到了里程数据；0：未取到里程数据
+ 263           */
+ 264          void GetMileage(unsigned char *GymInfoBuff, unsigned char *MileageInfo, uchar Msg)
+ 265          {
+ 266   1          uchar i = 0;
+ 267   1          uchar MileageIndex = 0;
+ 268   1          GymInfoBuff[GymInfoIndex++] = Msg;
+ 269   1          if (GymInfoIndex == GymInfoSize)
+ 270   1          {
+ 271   2              GymInfoIndex = 0;
+ 272   2              for (i = 0; i < GymInfoSize; i++)
+ 273   2              {
+ 274   3                  if ((GymInfoBuff[i + 0] == 0xaa) && (GymInfoBuff[i + 1] == 0x55) && (GymInfoBuff[i + 2] == 0x0
+             -3)) //如果是 aa 55 03,则是符合要求的信息，取到里程信息
+ 275   3                  {
+ 276   4      
+ 277   4                      MileageIndex = i + 5;
+ 278   4                      MileageInfo[0] = GymInfoBuff[MileageIndex];
+ 279   4                      MileageInfo[1] = GymInfoBuff[MileageIndex + 1];
+ 280   4                      Mileage_Finsh = 1;
+ 281   4                      break;
+ 282   4                  }
+ 283   3                  else
+ 284   3                  {
+ 285   4                      continue;
+ 286   4                  }
+ 287   3              }
+ 288   2              //memset(GymInfoBuff, 0x00, GymInfoSize);
+ 289   2                      //Relay_Stop = ~Relay_Stop;
+ 290   2          }
+ 291   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    858    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =    141    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      25
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.52.0.0   UART                                                              03/26/2018 14:07:43 PAGE 6   
+
+   BIT SIZE         =      6    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

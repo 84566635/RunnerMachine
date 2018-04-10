@@ -1,0 +1,4 @@
+"uart.obj",
+"boardID.obj" 
+TO "BoardId" 
+RAMSIZE(256) 

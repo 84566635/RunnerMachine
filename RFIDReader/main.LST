@@ -1,0 +1,85 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              02/03/2018 10:26:37 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "main.h"
+   2          #include "uart.h"
+   3          #include <fun.h>
+   4          #include <timer.h>
+   5          
+   6          bit ReadStatus;
+   7          bit FindStatus;
+   8          
+   9          extern uint xdata TimeIndex;
+  10          extern uchar xdata Card_Info[10];
+  11          extern bit UID_Receive_Flag;
+  12          
+  13          extern uchar MileageInfo[2];
+  14          extern bit Mileage_Finsh;
+  15          uint Mileage[2] = {0, 0};
+  16          uchar GymInfoCom_10s_Index = 0;
+  17          extern uint GymInfoCom_10s;
+  18          //**********************************************************************
+  19          void main()
+  20          {
+  21   1          uchar i = 0;
+  22   1          uchar temp = 0;
+  23   1          uchar UID_Temp[4] = {0x00, 0x00, 0x00, 0x00};
+  24   1      
+  25   1          Init_Uart();
+  26   1          InitTimer0();
+  27   1      
+  28   1          while (1)
+  29   1      
+  30   1          {
+  31   2              if (UID_Receive_Flag) //new Card Flash
+  32   2              {
+  33   3                  for (i = 0; i <= 3; i++)
+  34   3                  {
+  35   4                      UID_Temp[i] = Card_Info[5 + i];
+  36   4                  }
+  37   3                                      SendArrayStr(1,UID_Temp,4);
+  38   3                                      delay1(1000);
+  39   3                                      SendString(1,"\r\n");
+  40   3                      SendArrayHex(4, Card_Info, 10);
+  41   3                      ArrayReset(Card_Info, 0, 3, 6); //清除缓存区，以备下一次读卡做准备
+  42   3                      UID_Receive_Flag = 0;
+  43   3              }
+  44   2          }
+  45   1      }
+  46          
+  47          /**清除数组中指定区域，
+  48           * Array：待清除的数组
+  49           * Ch：清除区域准备填充的数据
+  50           * Head：待清除的起始地址
+  51           * Length：待清除的数据长度
+  52           */
+  53          void ArrayReset(unsigned char *Array, unsigned char Ch, char Head, char Length)
+  54          {
+  55   1          char i = 0;
+C51 COMPILER V9.52.0.0   MAIN                                                              02/03/2018 10:26:37 PAGE 2   
+
+  56   1          for (i = Head; i <= Length; i++)
+  57   1          {
+  58   2              Array[i] = Ch;
+  59   2          }
+  60   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    176    ----
+   CONSTANT SIZE    =      7    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
