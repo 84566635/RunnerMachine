@@ -107,4 +107,8 @@ dkms.conf
 *.rar
 *.zip
 
+<<<<<<< HEAD
 /RFIDPCB/
+=======
+/RFID_PCB/
+>>>>>>> 2512e3e3f8eb1e9f3aa991f20bb34cc0f1f6bbe5
